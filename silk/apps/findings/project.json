@@ -1,7 +1,7 @@
 {
-  "name": "dashboard",
+  "name": "findings",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/dashboard/src",
+  "sourceRoot": "apps/findings/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -11,12 +11,12 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/dashboard",
-        "main": "apps/dashboard/src/main.ts",
-        "tsConfig": "apps/dashboard/tsconfig.app.json",
-        "assets": ["apps/dashboard/src/assets"],
+        "outputPath": "dist/apps/findings",
+        "main": "apps/findings/src/main.ts",
+        "tsConfig": "apps/findings/tsconfig.app.json",
+        "assets": ["apps/findings/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/dashboard/webpack.config.js"
+        "webpackConfig": "apps/findings/webpack.config.js"
       },
       "configurations": {
         "development": {},
@@ -27,14 +27,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "dashboard:build"
+        "buildTarget": "findings:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "dashboard:build:development"
+          "buildTarget": "findings:build:development"
         },
         "production": {
-          "buildTarget": "dashboard:build:production"
+          "buildTarget": "findings:build:production"
         }
       }
     },
@@ -42,14 +42,14 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/dashboard/**/*.ts"]
+        "lintFilePatterns": ["apps/findings/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/dashboard/jest.config.ts",
+        "jestConfig": "apps/findings/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
