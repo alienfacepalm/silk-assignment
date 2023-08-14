@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 import { FindingsService } from './findings.service';
 
@@ -9,5 +9,10 @@ export class FindingsController {
   @Get()
   findAll(): { message: string } {
     return this.findingsService.getAllFindings();
+  }
+
+  @Get(':id')
+  findFindingById(@Param('id') id: string): { message: string } {
+    return this.findingsService.getFindingById(id);
   }
 }

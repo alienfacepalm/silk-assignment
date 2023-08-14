@@ -6,4 +6,8 @@ export class FindingsService {
     // query DB and return
     return { message: 'All findings stub' };
   }
+
+  getFindingById(id: string): { message: string } {
+    return { message: `Finding by id ${id}` };
+  }
 }
