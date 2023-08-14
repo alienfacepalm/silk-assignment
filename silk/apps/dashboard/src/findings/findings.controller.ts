@@ -2,6 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 
 import { FindingsService } from './findings.service';
 import { IGroupedFinding } from './schemas/grouped.interface';
+import { IRawFinding } from './schemas/raw.interface';
 
 @Controller('findings')
 export class FindingsController {
@@ -12,8 +13,10 @@ export class FindingsController {
     return this.findingsService.getGroupedFindings();
   }
 
-  @Get('raw')
-  findRawFindings(): Promise<IGroupedFinding[]> {
-    return this.findingsService.getRawFindings();
+  @Get('raw/:id?')
+  findRawFindings(@Param('id') id: number): Promise<IRawFinding[]> {
+    return id
+      ? this.findingsService.getRawFindings(id)
+      : this.findingsService.getRawFindings();
   }
 }

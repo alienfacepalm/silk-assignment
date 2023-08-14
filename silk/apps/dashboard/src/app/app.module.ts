@@ -14,7 +14,10 @@ import { RawFindingSchema } from '../findings/schemas/raw.schema';
     ConfigModule.forRoot({
       envFilePath: `${process.env.PWD}/apps/dashboard/${process.env.NODE_ENV}.env`,
     }),
-    MongooseModule.forRoot(process.env.NX_MONGO_URI, { dbName: 'findings' }),
+    MongooseModule.forRoot(
+      `${process.env.NX_MONGO_PROTOCOL}://${process.env.NX_MONGO_USERNAME}:${process.env.NX_MONGO_PASSWORD}@${process.env.NX_MONGO_HOST}`,
+      { dbName: 'findings' },
+    ),
     MongooseModule.forFeature([
       {
         name: 'GroupedFinding',

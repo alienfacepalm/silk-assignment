@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { IGroupedFinding } from './schemas/grouped.interface';
 import { IRawFinding } from './schemas/raw.interface';
-// import { RawFinding } from './schemas/raw.interface';
 
 @Injectable()
 export class FindingsService {
@@ -20,7 +19,9 @@ export class FindingsService {
     return this.groupedFindingModel.find();
   }
 
-  getRawFindings(): Promise<IGroupedFinding[]> {
-    return this.rawFindingModel.find();
+  getRawFindings(grouped_finding_id?: number): Promise<IRawFinding[]> {
+    return grouped_finding_id
+      ? this.rawFindingModel.find({ grouped_finding_id })
+      : this.rawFindingModel.find();
   }
 }
