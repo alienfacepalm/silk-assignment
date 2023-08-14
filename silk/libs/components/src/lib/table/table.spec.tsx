@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react'
 
-import App from './app'
+import Table from './table'
 
-describe('App', () => {
+describe('Table', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<App />)
+    const { baseElement } = render(<Table />)
     expect(baseElement).toBeTruthy()
   })
 })

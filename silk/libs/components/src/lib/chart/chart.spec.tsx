@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react'
 
-import App from './app'
+import Chart from './chart'
 
-describe('App', () => {
+describe('Chart', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<App />)
+    const { baseElement } = render(<Chart />)
     expect(baseElement).toBeTruthy()
   })
 })
