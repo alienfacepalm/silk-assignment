@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { IGroupedFinding } from './schemas/grouped.interface';
+import { IRawFinding } from './schemas/raw.interface';
 // import { RawFinding } from './schemas/raw.interface';
 
 @Injectable()
@@ -10,13 +11,16 @@ export class FindingsService {
   constructor(
     @InjectModel('GroupedFinding')
     private readonly groupedFindingModel: Model<IGroupedFinding>,
+
+    @InjectModel('RawFinding')
+    private readonly rawFindingModel: Model<IRawFinding>,
   ) {}
 
-  getAllFindings(): Promise<IGroupedFinding[]> {
-    return this.groupedFindingModel.find().exec();
+  getGroupedFindings(): Promise<IGroupedFinding[]> {
+    return this.groupedFindingModel.find();
   }
 
-  getFindingById(id: string): { message: string } {
-    return { message: `Finding by id ${id}` };
+  getRawFindings(): Promise<IGroupedFinding[]> {
+    return this.rawFindingModel.find();
   }
 }

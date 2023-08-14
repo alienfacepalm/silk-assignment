@@ -7,13 +7,13 @@ import { IGroupedFinding } from './schemas/grouped.interface';
 export class FindingsController {
   constructor(private readonly findingsService: FindingsService) {}
 
-  @Get()
-  findAll(): Promise<IGroupedFinding[]> {
-    return this.findingsService.getAllFindings();
+  @Get('grouped')
+  findGroupedFindings(): Promise<IGroupedFinding[]> {
+    return this.findingsService.getGroupedFindings();
   }
 
-  @Get(':id')
-  findFindingById(@Param('id') id: string): { message: string } {
-    return this.findingsService.getFindingById(id);
+  @Get('raw')
+  findRawFindings(): Promise<IGroupedFinding[]> {
+    return this.findingsService.getRawFindings();
   }
 }

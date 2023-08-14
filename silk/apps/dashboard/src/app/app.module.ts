@@ -9,25 +9,22 @@ import { FindingsService } from '../findings/findings.service';
 import { GroupedFindingSchema } from '../findings/schemas/grouped.schema';
 import { RawFindingSchema } from '../findings/schemas/raw.schema';
 
-// TODO: use ENVVAR FOR MONGO URI
-// TODO: lockdown as forFeature
-// TODO: schemas
-
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: `${process.env.NODE_ENV}.env` }),
-    MongooseModule.forRoot(
-      'mongodb+srv://silk:AeeozKBYwnnNCutV@pliska-mongo-cluster-0.q3in4me.mongodb.net/?retryWrites=true&w=majority',
-      { dbName: 'findings' },
-    ),
+    ConfigModule.forRoot({
+      envFilePath: `${process.env.PWD}/apps/dashboard/${process.env.NODE_ENV}.env`,
+    }),
+    MongooseModule.forRoot(process.env.NX_MONGO_URI, { dbName: 'findings' }),
     MongooseModule.forFeature([
       {
         name: 'GroupedFinding',
         schema: GroupedFindingSchema,
+        collection: 'grouped_findings',
       },
       {
         name: 'RawFinding',
         schema: RawFindingSchema,
+        collection: 'raw_findings',
       },
     ]),
   ],
