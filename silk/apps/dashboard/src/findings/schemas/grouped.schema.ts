@@ -1,21 +1,8 @@
-import { Schema, Document } from 'mongoose';
+import { Schema } from 'mongoose';
 
-interface GroupedFinding extends Document {
-  id: number;
-  grouping_type: string;
-  grouping_key: string;
-  severity: string;
-  grouped_finding_created: Date;
-  sla: Date;
-  description: string;
-  security_analyst: string;
-  owner: string;
-  workflow: string;
-  status: string;
-  progress: number;
-}
+import { IGroupedFinding } from './grouped.interface';
 
-export const GroupedFindingsSchema = new Schema<GroupedFinding>({
+export const GroupedFindingSchema = new Schema<IGroupedFinding>({
   id: { type: Number, required: true },
   grouping_type: { type: String, required: true },
   grouping_key: { type: String, required: true },

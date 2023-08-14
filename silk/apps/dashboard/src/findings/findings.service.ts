@@ -2,12 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
+import { IGroupedFinding } from './schemas/grouped.interface';
+// import { RawFinding } from './schemas/raw.interface';
+
 @Injectable()
 export class FindingsService {
-  getAllFindings(): { message: string } {
-    // query DB and return
+  constructor(
+    @InjectModel('GroupedFinding')
+    private readonly groupedFindingModel: Model<IGroupedFinding>,
+  ) {}
 
-    return { message: 'All findings stub' };
+  getAllFindings(): Promise<IGroupedFinding[]> {
+    return this.groupedFindingModel.find().exec();
   }
 
   getFindingById(id: string): { message: string } {
