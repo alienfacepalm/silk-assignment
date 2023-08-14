@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common'
 
-import { FindingsService } from './findings.service';
+import { FindingsService } from './findings.service'
 
 @Module({
   imports: [],
