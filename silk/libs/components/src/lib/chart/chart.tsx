@@ -10,5 +10,3 @@ export function Chart(props: ChartProps) {
     </div>
   )
 }
-
-export default Chart

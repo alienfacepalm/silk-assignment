@@ -10,5 +10,3 @@ export function Table(props: TableProps) {
     </div>
   )
 }
-
-export default Table
