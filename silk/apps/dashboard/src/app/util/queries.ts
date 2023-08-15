@@ -1,4 +1,4 @@
-import { IGroupedFinding, IRawFinding } from './view/dashboard/types'
+import { IGroupedFinding, IRawFinding } from '../view/dashboard/types'
 
 // TODO: make .env work
 

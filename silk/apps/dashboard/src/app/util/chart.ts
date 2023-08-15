@@ -1,5 +1,5 @@
 import { Data } from 'react-minimal-pie-chart/types/commonTypes'
-import { IGroupedFinding } from './view/dashboard/types'
+import { IGroupedFinding } from '../view/dashboard/types'
 
 function calculateSeverityPercentages(findings: IGroupedFinding[]): {
   low: number
