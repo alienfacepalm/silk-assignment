@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@alienfacepalm/chart": ["libs/components/src/lib/chart/chart.ts"],
-      "@alienfacepalm/table": ["libs/components/src/lib/table/table.ts"]
+      "@alienfacepalm/chart": ["libs/components/src/lib/chart/chart.tsx"],
+      "@alienfacepalm/table": ["libs/components/src/lib/table/table.tsx"]
     }
   },
   "exclude": ["node_modules", "tmp"]
