@@ -2,17 +2,19 @@
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
-import styles from './app.module.css'
-
+import { Header } from './components/header'
 import { Dashboard } from './view/dashboard'
 
 const queryClient = new QueryClient()
 
 export function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Dashboard />
-    </QueryClientProvider>
+    <>
+      <Header />
+      <QueryClientProvider client={queryClient}>
+        <Dashboard />
+      </QueryClientProvider>
+    </>
   )
 }
 

@@ -11,16 +11,19 @@ import {
 
 import { Severity } from './severity'
 import { IGroupedFinding } from '../../view/dashboard/types'
+import { getRawFindingsCountsById } from '../../util'
 
 import './table.css'
 
-export const Table: React.FC<{ data: IGroupedFinding[] }> = ({ data }) => {
+export const Table: React.FC<{
+  data: IGroupedFinding[]
+  handleRowClick: (rowId: number) => void
+}> = ({ data, handleRowClick }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const columns = React.useMemo<ColumnDef<IGroupedFinding>[]>(
     () => [
       {
         header: 'Grouped Findings',
-        // footer: (props) => props.column.id,
         columns: [
           {
             accessorKey: 'id',
@@ -76,7 +79,7 @@ export const Table: React.FC<{ data: IGroupedFinding[] }> = ({ data }) => {
             header: () => <span>STATUS</span>,
           },
           {
-            accessorFn: () => 4, // calculate from raw findings query
+            accessorFn: () => (row) => getRawFindingsCountsById(row.id), // calculate from raw findings query
             id: 'number_of_findings',
             cell: (info) => info.getValue(),
             header: () => <span>NUMBER OF FINDINGS</span>,

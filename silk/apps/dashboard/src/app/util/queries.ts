@@ -12,3 +12,7 @@ export function getGroupedFindings(): Promise<IGroupedFinding[]> {
 export function getRawFindingsById(id: number): Promise<IRawFinding[]> {
   return fetch(`${API}/findings/raw/${id}`).then((res: Response) => res.json())
 }
+
+export function getRawFindingsCountsById(): Promise<any> {
+  return fetch(`${API}/findings/raw/count`).then((res: Response) => res.json())
+}

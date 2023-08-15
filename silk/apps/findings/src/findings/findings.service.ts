@@ -3,7 +3,7 @@ import { Model } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose'
 
 import { IGroupedFinding } from './schemas/grouped.interface'
-import { IRawFinding } from './schemas/raw.interface'
+import { IRawFinding, IRawFindingCount } from './schemas/raw.interface'
 
 @Injectable()
 export class FindingsService {
@@ -34,5 +34,21 @@ export class FindingsService {
     return grouped_finding_id
       ? this.rawFindingModel.find({ grouped_finding_id })
       : this.rawFindingModel.find()
+  }
+
+  countRawFindings(): Promise<IRawFindingCount[]> {
+    return this.rawFindingModel.aggregate([
+      {
+        $group: {
+          _id: '$grouped_finding_id',
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+    ])
   }
 }

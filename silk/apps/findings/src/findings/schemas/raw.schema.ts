@@ -1,6 +1,6 @@
-import { Schema } from 'mongoose';
+import { Schema } from 'mongoose'
 
-import { IRawFinding } from './raw.interface';
+import { IRawFinding } from './raw.interface'
 
 export const RawFindingSchema = new Schema<IRawFinding>({
   id: { type: Number, required: true },
@@ -17,4 +17,4 @@ export const RawFindingSchema = new Schema<IRawFinding>({
   remediation_url: { type: String, required: true },
   remediation_text: { type: String, required: true },
   grouped_finding_id: { type: Number, required: true },
-});
+})

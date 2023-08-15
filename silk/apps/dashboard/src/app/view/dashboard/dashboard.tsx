@@ -32,6 +32,15 @@ export const Dashboard: React.FC = () => {
     enabled: selectedRowId > 0,
   })
 
+  const {
+    isLoading: rawFindingCountsIsLoading, 
+    error: rawFindingCountsError, 
+    data: rawFindingCounts } = useQuery({
+      queryKey: ['rawFindingCounts'], 
+      queryFn: getRaw
+    })
+  }
+
   const handleRowClick = (rowId: number) => {
     setExpandedRow(rowId === expandedRow ? null : rowId)
     setSelectedRowId(rowId)
@@ -43,5 +52,11 @@ export const Dashboard: React.FC = () => {
   if (rawFindingsError)
     return <ErrorMessage error={rawFindingsError as Error} />
 
-  if (groupedFindings) return <Table data={groupedFindings} />
+  if (groupedFindings)
+    return (
+      <Table
+        data={groupedFindings as IGroupedFinding[]}
+        handleRowClick={handleRowClick}
+      />
+    )
 }
