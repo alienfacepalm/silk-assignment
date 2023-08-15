@@ -4,7 +4,7 @@ import { upperCase, startCase } from 'lodash'
 import './table.css'
 
 const statusColorMap: Record<string, string> = {
-  pending: '#e6cc00',
+  open: '#e6cc00',
   in_progress: '#149414',
   halted: '#ff6600',
   cancelled: '#ff0000',
@@ -12,7 +12,7 @@ const statusColorMap: Record<string, string> = {
 }
 
 const statusProgressMap: Record<string, number> = {
-  pending: 0,
+  open: 0,
   in_progress: 50,
   halted: 50,
   cancelled: 100,

@@ -2,11 +2,14 @@ import React from 'react'
 import moment from 'moment'
 import {
   useReactTable,
+  ExpandedState,
   ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   SortingState,
+  getExpandedRowModel,
+  getPaginationRowModel,
 } from '@tanstack/react-table'
 
 import { Severity } from './severity'
@@ -25,6 +28,8 @@ export const Table: React.FC<{
   handleRowClick: (rowId: number) => void
 }> = ({ data, rawFindingsCounts, handleRowClick }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [expanded, setExpanded] = React.useState<ExpandedState>(true)
+  const [perPage, setPerPage] = React.useState<number>(10)
   const columns = React.useMemo<ColumnDef<IGroupedFinding>[]>(
     () => [
       {
@@ -32,7 +37,7 @@ export const Table: React.FC<{
         columns: [
           {
             accessorKey: 'id',
-            cell: (info) => info.getValue(),
+            cell: ({ row }) => {},
             header: () => <span>ID</span>,
           },
           {
@@ -91,7 +96,9 @@ export const Table: React.FC<{
               return record?.count.toString()
             },
             id: 'number_of_findings',
-            cell: (info) => info.getValue(),
+            cell: (info) => (
+              <div className="finding-count">{info.getValue()}</div>
+            ),
             header: () => <span>NUMBER OF FINDINGS</span>,
           },
         ],
@@ -103,10 +110,13 @@ export const Table: React.FC<{
   const table = useReactTable({
     data,
     columns,
-    state: { sorting },
+    state: { sorting, expanded },
+    onExpandedChange: setExpanded,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     debugTable: true,
   })
 
@@ -146,29 +156,87 @@ export const Table: React.FC<{
           ))}
         </thead>
         <tbody>
-          {table
-            .getRowModel()
-            .rows.slice(0, 10)
-            .map((row) => {
-              return (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
         </tbody>
       </table>
+      <div className="h-2" />
+      <div className="flex items-center gap-2">
+        <button
+          className="border rounded p-1"
+          onClick={() => table.setPageIndex(0)}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<<'}
+        </button>
+        <button
+          className="border rounded p-1"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<'}
+        </button>
+        <button
+          className="border rounded p-1"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>'}
+        </button>
+        <button
+          className="border rounded p-1"
+          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>>'}
+        </button>
+        <span className="flex items-center gap-1">
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of{' '}
+            {table.getPageCount()}
+          </strong>
+        </span>
+        <span className="flex items-center gap-1">
+          | Go to page:
+          <input
+            type="number"
+            defaultValue={table.getState().pagination.pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              table.setPageIndex(page)
+            }}
+            className="border p-1 rounded w-16"
+          />
+        </span>
+        <select
+          value={table.getState().pagination.pageSize}
+          onChange={(e) => {
+            table.setPageSize(Number(e.target.value))
+          }}
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
       <div>{table.getRowModel().rows.length} Rows</div>
-      <pre>{JSON.stringify(sorting, null, 2)}</pre>
     </div>
   )
 }
