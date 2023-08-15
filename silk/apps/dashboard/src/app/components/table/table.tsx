@@ -49,13 +49,13 @@ export const Table: React.FC<{
           {
             accessorFn: (row: IGroupedFinding) => row.grouped_finding_created,
             id: 'time',
-            cell: (info) => moment(info.getValue()).format('LL'),
+            cell: (info) => moment(info.getValue()).format('L hh:mm'),
             header: () => <span>TIME</span>,
           },
           {
             accessorFn: (row: IGroupedFinding) => row.sla,
             id: 'sla',
-            cell: (info) => moment(info.getValue()).format('LLL'),
+            cell: (info) => moment(info.getValue()).format('L hh:mm'),
             header: () => <span>SLA</span>,
           },
           {
@@ -93,6 +93,7 @@ export const Table: React.FC<{
               const record = rawFindingsCounts?.find(
                 (finding: IRawFindingCount) => row.id === Number(finding._id),
               )
+              console.log({ rawFindingsCounts, record })
               return record?.count.toString()
             },
             id: 'number_of_findings',

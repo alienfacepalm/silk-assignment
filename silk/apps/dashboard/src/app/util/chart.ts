@@ -8,7 +8,7 @@ export const severityColorMap: Record<string, string> = {
   critical: '#ff0000',
 }
 
-function calculateSeverityPercentages(findings: IGroupedFinding[]): {
+export function calculateSeverityPercentages(findings: IGroupedFinding[]): {
   low: number
   medium: number
   high: number
