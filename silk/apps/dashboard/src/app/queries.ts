@@ -10,6 +10,5 @@ export function getGroupedFindings(): Promise<IGroupedFinding[]> {
 }
 
 export function getRawFindingsById(id: number): Promise<IRawFinding[]> {
-  console.log({ id })
   return fetch(`${API}/findings/raw/${id}`).then((res: Response) => res.json())
 }
