@@ -5,7 +5,11 @@ import { useQuery } from '@tanstack/react-query'
 
 import { Loader, ErrorMessage, Table } from '../../components'
 
-import { getGroupedFindings, getRawFindingsById } from '../../util/queries'
+import {
+  getGroupedFindings,
+  getRawFindingsById,
+  getRawFindingsCounts,
+} from '../../util/queries'
 import { severityPercentageChartData } from '../../util/chart'
 
 import { IGroupedFinding, IRawFinding } from './types'
@@ -33,13 +37,13 @@ export const Dashboard: React.FC = () => {
   })
 
   const {
-    isLoading: rawFindingCountsIsLoading, 
-    error: rawFindingCountsError, 
-    data: rawFindingCounts } = useQuery({
-      queryKey: ['rawFindingCounts'], 
-      queryFn: getRaw
-    })
-  }
+    isLoading: rawFindingCountsIsLoading,
+    error: rawFindingCountsError,
+    data: rawFindingCounts,
+  } = useQuery({
+    queryKey: ['rawFindingCounts'],
+    queryFn: getRawFindingsCounts,
+  })
 
   const handleRowClick = (rowId: number) => {
     setExpandedRow(rowId === expandedRow ? null : rowId)
@@ -56,6 +60,7 @@ export const Dashboard: React.FC = () => {
     return (
       <Table
         data={groupedFindings as IGroupedFinding[]}
+        rawFindingsCounts={rawFindingCounts}
         handleRowClick={handleRowClick}
       />
     )

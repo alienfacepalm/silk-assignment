@@ -29,3 +29,9 @@ export interface IRawFinding {
   remediation_text: string
   grouped_finding_id: number
 }
+
+export interface IRawFindingCount {
+  _id: string
+  count: number
+  grouped_finding_id?: number
+}

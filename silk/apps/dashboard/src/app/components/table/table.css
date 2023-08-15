@@ -18,10 +18,11 @@ th {
   border-right: 1px solid lightgray;
   padding: 2px 4px;
   text-transform: uppercase;
+  min-width: 60px;
 }
 
 td {
-  padding: 2px;
+  padding: 3px;
 }
 
 tfoot {
@@ -32,11 +33,20 @@ tfoot th {
   font-weight: normal;
 }
 
-.severity {
+.severity,
+.status {
   text-transform: uppercase;
   padding: 3px;
   border-radius: 5px;
   text-align: center;
   color: #ffffff;
   font-size: 0.8rem;
+}
+
+.progress {
+  margin: 3px;
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, #86dc3d 50%, transparent 50%);
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }

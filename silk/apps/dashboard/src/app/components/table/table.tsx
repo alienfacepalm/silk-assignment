@@ -10,15 +10,20 @@ import {
 } from '@tanstack/react-table'
 
 import { Severity } from './severity'
-import { IGroupedFinding } from '../../view/dashboard/types'
-import { getRawFindingsCountsById } from '../../util'
+import { Status } from './status'
+import {
+  IGroupedFinding,
+  IRawFinding,
+  IRawFindingCount,
+} from '../../view/dashboard/types'
 
 import './table.css'
 
 export const Table: React.FC<{
   data: IGroupedFinding[]
+  rawFindingsCounts: IRawFindingCount[]
   handleRowClick: (rowId: number) => void
-}> = ({ data, handleRowClick }) => {
+}> = ({ data, rawFindingsCounts, handleRowClick }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const columns = React.useMemo<ColumnDef<IGroupedFinding>[]>(
     () => [
@@ -31,55 +36,60 @@ export const Table: React.FC<{
             header: () => <span>ID</span>,
           },
           {
-            accessorFn: (row) => row.severity,
+            accessorFn: (row: IGroupedFinding) => row.severity,
             id: 'severity',
             cell: (info) => <Severity level={info.getValue()} />,
             header: () => <span>SEVERITY</span>,
           },
           {
-            accessorFn: (row) => row.grouped_finding_created,
+            accessorFn: (row: IGroupedFinding) => row.grouped_finding_created,
             id: 'time',
-            cell: (info) => moment(info.getValue()).format('LLL'),
+            cell: (info) => moment(info.getValue()).format('LL'),
             header: () => <span>TIME</span>,
           },
           {
-            accessorFn: (row) => row.sla,
+            accessorFn: (row: IGroupedFinding) => row.sla,
             id: 'sla',
             cell: (info) => moment(info.getValue()).format('LLL'),
             header: () => <span>SLA</span>,
           },
           {
-            accessorFn: (row) => row.description,
+            accessorFn: (row: IGroupedFinding) => row.description,
             id: 'description',
             cell: (info) => info.getValue(),
             header: () => <span>DESCRIPTION</span>,
           },
           {
-            accessorFn: (row) => row.security_analyst,
+            accessorFn: (row: IGroupedFinding) => row.security_analyst,
             id: 'security_analyst',
             cell: (info) => info.getValue(),
             header: () => <span>SECURITY ANALYST</span>,
           },
           {
-            accessorFn: (row) => row.owner,
+            accessorFn: (row: IGroupedFinding) => row.owner,
             id: 'owner',
             cell: (info) => info.getValue(),
             header: () => <span>OWNER</span>,
           },
           {
-            accessorFn: (row) => row.workflow,
+            accessorFn: (row: IGroupedFinding) => row.workflow,
             id: 'workflow',
             cell: (info) => info.getValue(),
             header: () => <span>WORKFLOW</span>,
           },
           {
-            accessorFn: (row) => row.status,
+            accessorFn: (row: IGroupedFinding) => row.status,
             id: 'status',
-            cell: (info) => info.getValue(),
+            cell: (info) => <Status value={info.getValue()} />,
             header: () => <span>STATUS</span>,
           },
           {
-            accessorFn: () => (row) => getRawFindingsCountsById(row.id), // calculate from raw findings query
+            accessorFn: (row: IGroupedFinding) => {
+              const record = rawFindingsCounts?.find(
+                (finding: IRawFindingCount) => row.id === Number(finding._id),
+              )
+              return record?.count.toString()
+            },
             id: 'number_of_findings',
             cell: (info) => info.getValue(),
             header: () => <span>NUMBER OF FINDINGS</span>,
@@ -124,8 +134,8 @@ export const Table: React.FC<{
                           header.getContext(),
                         )}
                         {{
-                          asc: ' 🔼',
-                          desc: ' 🔽',
+                          asc: ' ▴',
+                          desc: ' ▾',
                         }[header.column.getIsSorted() as string] ?? null}
                       </div>
                     )}

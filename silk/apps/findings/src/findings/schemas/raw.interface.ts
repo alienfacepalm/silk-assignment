@@ -20,5 +20,4 @@ export interface IRawFinding extends Document {
 export interface IRawFindingCount {
   _id: string
   count: number
-  grouped_finding_id?: number
 }
