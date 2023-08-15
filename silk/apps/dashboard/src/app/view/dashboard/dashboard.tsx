@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { PieChart } from 'react-minimal-pie-chart'
 import moment from 'moment'
 
+import { Loader } from './loader'
+
 import { getGroupedFindings } from '../../queries'
 import { severityPercentageChartData } from '../../util'
 
@@ -10,7 +12,6 @@ import {
   IGroupedFinding,
   //  IRawFinding
 } from './types'
-import { BaseDataEntry, Data } from 'react-minimal-pie-chart/types/commonTypes'
 
 export const Dashboard: React.FC = () => {
   const {
@@ -26,10 +27,8 @@ export const Dashboard: React.FC = () => {
   const handleRowClick = (rowId: number) =>
     setExpandedRow(rowId === expandedRow ? null : rowId)
 
-  if (isLoading) return '...'
+  if (isLoading) return <Loader />
   if (error) return error.toString()
-
-  console.log({ groupedFindings })
 
   if (groupedFindings)
     return (
@@ -41,6 +40,11 @@ export const Dashboard: React.FC = () => {
           <PieChart
             data={severityPercentageChartData(groupedFindings)}
             radius={40}
+            labelStyle={{
+              fontSize: '5px',
+              color: 'FFFFFA',
+              fontWeight: '800',
+            }}
             animate
           />
         </div>

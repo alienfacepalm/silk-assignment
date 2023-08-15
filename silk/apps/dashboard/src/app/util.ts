@@ -31,25 +31,19 @@ function calculateSeverityPercentages(findings: IGroupedFinding[]): {
   return { low, medium, high }
 }
 
-export function severityPercentageChartData(findings: IGroupedFinding[]): Data {
-  const percentages = calculateSeverityPercentages(findings)
-  console.log({ percentages })
-  return [
-    {
-      title: 'low',
-      value: 50,
-      color: `#${((Math.random() * 0xffffff) << 0).toString(16)}`,
-    },
-    {
-      title: 'high',
-      value: 50,
-      color: `#${((Math.random() * 0xffffff) << 0).toString(16)}`,
-    },
-  ]
+const colorMap: Record<string, string> = {
+  low: 'blue',
+  medium: 'yellow',
+  high: 'red',
 }
 
-// return {
-//     title: percentage,
-//     value: finding.severity, // Provide a default value or transform as needed
-//     color: `#${((Math.random() * 0xffffff) << 0).toString(16)}`,
-//   }
+export function severityPercentageChartData(findings: IGroupedFinding[]): Data {
+  const percentages: Record<string, number> =
+    calculateSeverityPercentages(findings)
+
+  return Object.entries(percentages).map(([title, value]) => ({
+    title,
+    value,
+    color: colorMap[title] || 'gray',
+  }))
+}
