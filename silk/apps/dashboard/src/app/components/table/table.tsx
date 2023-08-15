@@ -1,8 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-
-import './table.css'
-
 import {
   useReactTable,
   ColumnDef,
@@ -12,7 +9,10 @@ import {
   SortingState,
 } from '@tanstack/react-table'
 
+import { Severity } from './severity'
 import { IGroupedFinding } from '../../view/dashboard/types'
+
+import './table.css'
 
 export const Table: React.FC<{ data: IGroupedFinding[] }> = ({ data }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -30,7 +30,7 @@ export const Table: React.FC<{ data: IGroupedFinding[] }> = ({ data }) => {
           {
             accessorFn: (row) => row.severity,
             id: 'severity',
-            cell: (info) => info.getValue(),
+            cell: (info) => <Severity level={info.getValue()} />,
             header: () => <span>SEVERITY</span>,
           },
           {

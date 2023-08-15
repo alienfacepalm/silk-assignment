@@ -15,6 +15,11 @@ th {
   border-bottom: 1px solid lightgray;
   border-right: 1px solid lightgray;
   padding: 2px 4px;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2px;
 }
 
 tfoot {
@@ -23,4 +28,13 @@ tfoot {
 
 tfoot th {
   font-weight: normal;
+}
+
+.severity {
+  text-transform: uppercase;
+  padding: 3px;
+  border-radius: 5px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 0.8rem;
 }
