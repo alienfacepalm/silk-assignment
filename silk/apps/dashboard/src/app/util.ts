@@ -33,7 +33,7 @@ function calculateSeverityPercentages(findings: IGroupedFinding[]): {
 
 const colorMap: Record<string, string> = {
   low: 'blue',
-  medium: 'yellow',
+  medium: '#e6cc00',
   high: 'red',
 }
 
