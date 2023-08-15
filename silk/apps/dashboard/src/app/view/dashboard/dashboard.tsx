@@ -9,7 +9,7 @@ import {
   getRawFindingsCounts,
 } from '../../util/queries'
 import { severityPercentageChartData } from '../../util/chart'
-import { PieChart } from '../../components/pie-chart'
+import { PieChart, Legend } from '../../components/pie-chart'
 import { IGroupedFinding, IRawFinding } from './types'
 
 export const Dashboard: React.FC = () => {
@@ -90,11 +90,16 @@ export const Dashboard: React.FC = () => {
         )}
 
         {show === 'chart' && (
-          <div className="flex flex-wrap">
-            <div className="w-full md:w-1/2">
-              <PieChart data={severityPercentageChartData(groupedFindings)} />
+          <>
+            <div className="flex justify-center p-20 row-auto">
+              <div className="w-full md:w-1/2">
+                <PieChart data={severityPercentageChartData(groupedFindings)} />
+              </div>
             </div>
-          </div>
+            <div className="row-auto">
+              <Legend data={severityPercentageChartData(groupedFindings)} />
+            </div>
+          </>
         )}
       </div>
     )
