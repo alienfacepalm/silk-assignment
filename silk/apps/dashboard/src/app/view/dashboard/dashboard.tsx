@@ -54,7 +54,7 @@ export const Dashboard: React.FC = () => {
   if (rawFindingCountsError)
     return <ErrorMessage error={rawFindingCountsError as Error} />
 
-  if (groupedFindings)
+  if (tableData)
     return (
       <div className="grid place-items-center">
         <div className="inline-flex" role="group">

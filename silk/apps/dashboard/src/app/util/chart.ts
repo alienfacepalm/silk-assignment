@@ -38,9 +38,12 @@ export function calculateSeverityPercentages(findings: IGroupedFinding[]): {
   return { low, medium, high }
 }
 
-export function severityPercentageChartData(findings: IGroupedFinding[]): Data {
-  const percentages: Record<string, number> =
-    calculateSeverityPercentages(findings)
+export function severityPercentageChartData(
+  findings: IGroupedFinding[] | undefined,
+): Data {
+  const percentages: Record<string, number> = calculateSeverityPercentages(
+    findings as IGroupedFinding[],
+  )
 
   return Object.entries(percentages).map(([title, value]) => ({
     title,

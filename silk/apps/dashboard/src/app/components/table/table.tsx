@@ -22,7 +22,6 @@ export const Table: React.FC<{
   data: IGroupedFinding[]
   rawFindingsCounts: IRawFindingCount[]
 }> = ({ data, rawFindingsCounts }) => {
-  console.log('Table data->', { data })
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
@@ -121,7 +120,7 @@ export const Table: React.FC<{
   const table = useReactTable({
     data,
     columns,
-    state: { expanded },
+    state: { expanded, sorting },
     getSubRows: (row) => row.subRows,
     onExpandedChange: setExpanded,
     onSortingChange: setSorting,
@@ -248,8 +247,6 @@ export const Table: React.FC<{
           ))}
         </select>
       </div>
-      <div>{table.getRowModel().rows.length} Rows</div>
-      <pre>{JSON.stringify(expanded, null, 2)}</pre>
     </div>
   )
 }
