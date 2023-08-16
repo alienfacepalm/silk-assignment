@@ -96,7 +96,7 @@ export const Dashboard: React.FC = () => {
         {show === 'chart' && (
           <>
             <div className="flex justify-center p-20 row-auto">
-              <div className="w-full md:w-1/2">
+              <div className="w-full md:w-50">
                 <PieChart data={severityPercentageChartData(groupedFindings)} />
               </div>
             </div>
