@@ -23,4 +23,5 @@
 #### Instructions
 
 - git clone git@github.com:alienfacepalm/silk-assignment.git
+- cd silk-assignment
 - ./run.sh
