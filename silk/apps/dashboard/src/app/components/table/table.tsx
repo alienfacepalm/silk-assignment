@@ -44,7 +44,7 @@ export const Table: React.FC<{
                     {row.getIsExpanded() ? '▼' : '▶'}
                   </button>
                 ) : (
-                  '     ⊳'
+                  '-'
                 )}
               </>
             ),
