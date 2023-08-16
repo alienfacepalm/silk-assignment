@@ -1,4 +1,5 @@
 import React from 'react'
+import { startCase } from 'lodash'
 
 import { severityColorMap } from '../../util'
 
@@ -10,7 +11,7 @@ export const Legend: React.FC = () => (
           className="w-4 h-4 mr-2"
           style={{ backgroundColor: severityColorMap[severity] }}
         />
-        <span>{severity}</span>
+        <span>{startCase(severity)}</span>
       </div>
     ))}
   </div>
