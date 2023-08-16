@@ -5,11 +5,7 @@ import { Data } from 'react-minimal-pie-chart/types/commonTypes'
 function round(value: number): number {
   const decimalPart = value - Math.floor(value)
 
-  if (decimalPart > 0.8) {
-    return Math.ceil(value)
-  } else {
-    return Math.floor(value)
-  }
+  return decimalPart > 0.8 ? Math.ceil(value) : Math.floor(value)
 }
 
 export const PieChart: React.FC<{ data: Data }> = ({ data }) => (
