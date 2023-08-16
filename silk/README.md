@@ -9,7 +9,7 @@
 - This was built with Nx (nx.dev) using Vite. I didn't use the `libs` directory, as I normally would if building a Storybook or NPM modules, as this project is small, but Nx does such a good job with build configurations out of the box it seemed like a good move to use it anyways.
 - The SPA is in React
   - Located in `apps/dashboard/src/app`
-- THe backend is in NestJS and Mongo Atlas
+- The backend is in NestJS and Mongo Atlas
   - Located in `apps/findings/src`
     - NOTE: I decided for this exercise gRPC or GraphQL are overkill, so I just set up basic GET endpoints
     - NOTE: code is mostly in `findings` dir
