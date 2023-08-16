@@ -10,7 +10,7 @@ import {
 } from '../../util/queries'
 import { severityPercentageChartData } from '../../util/chart'
 import { PieChart, Legend } from '../../components/pie-chart'
-import { IGroupedFinding } from './types'
+import { IGroupedFinding, IRawFinding } from './types'
 
 export const Dashboard: React.FC = () => {
   const [show, setShow] = React.useState<'table' | 'chart'>('table')
@@ -37,8 +37,9 @@ export const Dashboard: React.FC = () => {
   const tableData: IGroupedFinding[] | undefined = React.useMemo(() => {
     if (groupedFindings && rawFindings) {
       for (let i = 0; i < groupedFindings.length; i++) {
-        const subRows = rawFindings?.filter(
-          (raw) => raw.grouped_finding_id === groupedFindings[i].id,
+        const subRows: IRawFinding[] = rawFindings?.filter(
+          (raw: IRawFinding) =>
+            raw.grouped_finding_id === groupedFindings[i].id,
         )
         groupedFindings[i].subRows = subRows
       }
