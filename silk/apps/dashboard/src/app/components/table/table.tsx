@@ -14,22 +14,17 @@ import {
 
 import { Severity } from './severity'
 import { Status } from './status'
-import {
-  IGroupedFinding,
-  IRawFinding,
-  IRawFindingCount,
-} from '../../view/dashboard/types'
+import { IGroupedFinding, IRawFindingCount } from '../../view/dashboard/types'
 
 import './table.css'
 
 export const Table: React.FC<{
   data: IGroupedFinding[]
   rawFindingsCounts: IRawFindingCount[]
-  handleRowClick: (rowId: number) => void
-}> = ({ data, rawFindingsCounts, handleRowClick }) => {
+}> = ({ data, rawFindingsCounts }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [expanded, setExpanded] = React.useState<ExpandedState>(true)
-  const [perPage, setPerPage] = React.useState<number>(10)
+  const [expanded, setExpanded] = React.useState<ExpandedState>({})
+
   const columns = React.useMemo<ColumnDef<IGroupedFinding>[]>(
     () => [
       {
@@ -37,7 +32,18 @@ export const Table: React.FC<{
         columns: [
           {
             accessorKey: 'id',
-            cell: ({ row }) => {},
+            cell: ({ row }) => (
+              <>
+                <button
+                  onClick={async () => {
+                    console.log('TOGGLE EXPANDED')
+                    row.getToggleExpandedHandler()
+                  }}
+                >
+                  ▲
+                </button>
+              </>
+            ),
             header: () => <span>ID</span>,
           },
           {
@@ -93,7 +99,6 @@ export const Table: React.FC<{
               const record = rawFindingsCounts?.find(
                 (finding: IRawFindingCount) => row.id === Number(finding._id),
               )
-              console.log({ rawFindingsCounts, record })
               return record?.count.toString()
             },
             id: 'number_of_findings',
@@ -112,13 +117,14 @@ export const Table: React.FC<{
     data,
     columns,
     state: { sorting, expanded },
+    getSubRows: (row) => row.subRows,
     onExpandedChange: setExpanded,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    debugTable: true,
+    debugTable: false,
   })
 
   return (

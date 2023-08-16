@@ -5,17 +5,16 @@ import { Loader, ErrorMessage, Table } from '../../components'
 
 import {
   getGroupedFindings,
-  getRawFindingsById,
+  getRawFindings,
   getRawFindingsCounts,
 } from '../../util/queries'
 import { severityPercentageChartData } from '../../util/chart'
 import { PieChart, Legend } from '../../components/pie-chart'
-import { IGroupedFinding, IRawFinding } from './types'
+import { IGroupedFinding } from './types'
 
 export const Dashboard: React.FC = () => {
   const [show, setShow] = React.useState<'table' | 'chart'>('table')
-  const [selectedRowId, setSelectedRowId] = React.useState<number>(0)
-  const [expandedRow, setExpandedRow] = React.useState<number | null>(null)
+
   const {
     isLoading: groupedFindingsIsLoading,
     error: groupedFindingsError,
@@ -26,9 +25,8 @@ export const Dashboard: React.FC = () => {
   })
 
   const { error: rawFindingsError, data: rawFindings } = useQuery({
-    queryKey: ['rawFinding', selectedRowId],
-    queryFn: () => getRawFindingsById(selectedRowId),
-    enabled: selectedRowId > 0,
+    queryKey: ['rawFindings'],
+    queryFn: getRawFindings,
   })
 
   const { error: rawFindingCountsError, data: rawFindingCounts } = useQuery({
@@ -36,10 +34,17 @@ export const Dashboard: React.FC = () => {
     queryFn: getRawFindingsCounts,
   })
 
-  const handleRowClick = (rowId: number) => {
-    setExpandedRow(rowId === expandedRow ? null : rowId)
-    setSelectedRowId(rowId)
-  }
+  const tableData: any = React.useMemo(() => {
+    if (groupedFindings && rawFindings) {
+      for (let i = 0; i < groupedFindings.length; i++) {
+        const subRows = rawFindings?.filter(
+          (raw) => raw.grouped_finding_id === groupedFindings[i].id,
+        )
+        groupedFindings[i].subRows = subRows
+      }
+      return groupedFindings
+    }
+  }, [groupedFindings, rawFindings])
 
   if (groupedFindingsIsLoading) return <Loader />
   if (groupedFindingsError)
@@ -48,6 +53,8 @@ export const Dashboard: React.FC = () => {
     return <ErrorMessage error={rawFindingsError as Error} />
   if (rawFindingCountsError)
     return <ErrorMessage error={rawFindingCountsError as Error} />
+
+  console.log({ tableData })
 
   if (groupedFindings)
     return (
@@ -83,9 +90,8 @@ export const Dashboard: React.FC = () => {
 
         {show === 'table' && (
           <Table
-            data={groupedFindings as IGroupedFinding[]}
+            data={tableData as IGroupedFinding[]}
             rawFindingsCounts={rawFindingCounts}
-            handleRowClick={handleRowClick}
           />
         )}
 

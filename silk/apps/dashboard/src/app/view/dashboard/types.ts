@@ -11,6 +11,7 @@ export interface IGroupedFinding {
   workflow: string
   status: string
   progress: number
+  subRows?: any // TODO: type this
 }
 
 export interface IRawFinding {

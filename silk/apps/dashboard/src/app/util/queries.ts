@@ -8,6 +8,9 @@ const API = `http://localhost:7455/api`
 export function getGroupedFindings(): Promise<IGroupedFinding[]> {
   return fetch(`${API}/findings/grouped`).then((res: Response) => res.json())
 }
+export function getRawFindings(): Promise<IRawFinding[]> {
+  return fetch(`${API}/findings/raw`).then((res: Response) => res.json())
+}
 
 export function getRawFindingsById(id: number): Promise<IRawFinding[]> {
   return fetch(`${API}/findings/raw/${id}`).then((res: Response) => res.json())
