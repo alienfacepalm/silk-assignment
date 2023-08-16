@@ -15,7 +15,6 @@ export function calculateSeverityPercentages(findings: IGroupedFinding[]): {
   critical: number
 } {
   const initialCounts = { low: 0, medium: 0, high: 0, critical: 0 }
-
   const severityCounts = findings.reduce((accumulator, finding) => {
     switch (finding.severity) {
       case 'low':

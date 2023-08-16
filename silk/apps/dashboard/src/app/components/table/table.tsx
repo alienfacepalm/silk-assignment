@@ -107,7 +107,9 @@ export const Table: React.FC<{
             },
             id: 'number_of_findings',
             cell: (info) => (
-              <div className="finding-count">{info.getValue()}</div>
+              <div className={!!info.getValue() ? 'finding-count' : ''}>
+                {info.getValue()}
+              </div>
             ),
             header: () => <span>NUMBER OF FINDINGS</span>,
           },

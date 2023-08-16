@@ -9,7 +9,6 @@ else
     cd ..
 fi
 
-
 cd silk
 if [ "$1" == "prod" ]; then
     echo "Running assignment in production mode..."
