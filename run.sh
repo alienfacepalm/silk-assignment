@@ -1,7 +1,16 @@
 #!/bin/bash
 
-cd silk
+if [ -d "silk/node_modules" ]; then
+    echo "Node modules found in the silk directory."
+else
+    echo "Node modules not found in the silk directory. Running 'npm i'..."
+    cd silk
+    npm i
+    cd ..
+fi
 
+
+cd silk
 if [ "$1" == "prod" ]; then
     echo "Running assignment in production mode..."
     

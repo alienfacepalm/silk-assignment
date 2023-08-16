@@ -23,5 +23,4 @@
 #### Instructions
 
 - git clone git@github.com:alienfacepalm/silk-assignment.git
-- npm i
 - ./run.sh
