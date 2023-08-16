@@ -1,13 +1,10 @@
-// Import required modules and dependencies
 import { Injectable } from '@nestjs/common'
 import { Model } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose'
 
-// Import interfaces for schema typings
 import { IGroupedFinding } from './schemas/grouped.interface'
 import { IRawFinding, IRawFindingCount } from './schemas/raw.interface'
 
-// Define an injectable service class for handling findings-related operations
 @Injectable()
 export class FindingsService {
   constructor(
@@ -32,13 +29,9 @@ export class FindingsService {
    * @returns {Promise<IRawFinding[]>} A promise that resolves to an array of raw findings.
    */
   async getRawFindings(grouped_finding_id?: number): Promise<IRawFinding[]> {
-    if (grouped_finding_id) {
-      // If grouped_finding_id is provided, retrieve raw findings associated with it
-      return this.rawFindingModel.find({ grouped_finding_id })
-    } else {
-      // If no specific grouped_finding_id is provided, retrieve all raw findings
-      return this.rawFindingModel.find()
-    }
+    return grouped_finding_id
+      ? this.rawFindingModel.find({ grouped_finding_id })
+      : this.rawFindingModel.find()
   }
 
   /**
