@@ -24,5 +24,3 @@
 - git clone git@github.com:alienfacepalm/silk-assignment.git
 - npm i
 - ./run.sh
-  OR
-- npm i -g nx && nx run-many --target=serve --projects=findings,dashboard
