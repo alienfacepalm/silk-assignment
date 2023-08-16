@@ -101,7 +101,7 @@ export const Dashboard: React.FC = () => {
               </div>
             </div>
             <div className="row-auto">
-              <Legend data={severityPercentageChartData(groupedFindings)} />
+              <Legend />
             </div>
           </>
         )}
