@@ -34,7 +34,7 @@ export const Dashboard: React.FC = () => {
     queryFn: getRawFindingsCounts,
   })
 
-  const tableData: any = React.useMemo(() => {
+  const tableData: IGroupedFinding[] | undefined = React.useMemo(() => {
     if (groupedFindings && rawFindings) {
       for (let i = 0; i < groupedFindings.length; i++) {
         const subRows = rawFindings?.filter(
@@ -53,8 +53,6 @@ export const Dashboard: React.FC = () => {
     return <ErrorMessage error={rawFindingsError as Error} />
   if (rawFindingCountsError)
     return <ErrorMessage error={rawFindingCountsError as Error} />
-
-  console.log({ tableData })
 
   if (groupedFindings)
     return (

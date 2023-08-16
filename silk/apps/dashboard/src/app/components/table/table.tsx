@@ -22,6 +22,7 @@ export const Table: React.FC<{
   data: IGroupedFinding[]
   rawFindingsCounts: IRawFindingCount[]
 }> = ({ data, rawFindingsCounts }) => {
+  console.log('Table data->', { data })
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
@@ -34,14 +35,18 @@ export const Table: React.FC<{
             accessorKey: 'id',
             cell: ({ row }) => (
               <>
-                <button
-                  onClick={async () => {
-                    console.log('TOGGLE EXPANDED')
-                    row.getToggleExpandedHandler()
-                  }}
-                >
-                  ▲
-                </button>
+                {row.getCanExpand() ? (
+                  <button
+                    {...{
+                      onClick: row.getToggleExpandedHandler(),
+                      style: { cursor: 'pointer' },
+                    }}
+                  >
+                    {row.getIsExpanded() ? '▼' : '▶'}
+                  </button>
+                ) : (
+                  '     ⊳'
+                )}
               </>
             ),
             header: () => <span>ID</span>,
@@ -110,13 +115,13 @@ export const Table: React.FC<{
         ],
       },
     ],
-    [],
+    [data],
   )
 
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, expanded },
+    state: { expanded },
     getSubRows: (row) => row.subRows,
     onExpandedChange: setExpanded,
     onSortingChange: setSorting,
@@ -244,6 +249,7 @@ export const Table: React.FC<{
         </select>
       </div>
       <div>{table.getRowModel().rows.length} Rows</div>
+      <pre>{JSON.stringify(expanded, null, 2)}</pre>
     </div>
   )
 }
