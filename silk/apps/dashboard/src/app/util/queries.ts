@@ -1,11 +1,7 @@
-require('dotenv').config()
 import { IGroupedFinding, IRawFinding } from '../view/dashboard/types'
 
-// TODO: make .env work
-
 // const API = `${process.env.NX_API_PROTOCOL}://${process.env.NX_API_HOST}:${process.env.NX_API_PORT}/api`
-
-console.log({ env: process.env.NX_MONGO_HOST })
+// TODO: make dotenv work
 const API = `http://localhost:7455/api`
 
 export function getGroupedFindings(): Promise<IGroupedFinding[]> {
