@@ -1,4 +1,4 @@
 # Silk assignment
 
-[README](silk/README.md)
-[VIDEO](doc/setup.mp4)
+- [README](silk/README.md)
+- [SETUP VIDEO](https://youtu.be/Pl0wlWfsXBg)
