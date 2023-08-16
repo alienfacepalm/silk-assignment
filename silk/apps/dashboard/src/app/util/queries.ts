@@ -4,17 +4,14 @@ import { IGroupedFinding, IRawFinding } from '../view/dashboard/types'
 // TODO: make dotenv work
 const API = `http://localhost:7455/api`
 
-export function getGroupedFindings(): Promise<IGroupedFinding[]> {
-  return fetch(`${API}/findings/grouped`).then((res: Response) => res.json())
-}
-export function getRawFindings(): Promise<IRawFinding[]> {
-  return fetch(`${API}/findings/raw`).then((res: Response) => res.json())
-}
+export const getGroupedFindings = (): Promise<IGroupedFinding[]> =>
+  fetch(`${API}/findings/grouped`).then((res: Response) => res.json())
 
-export function getRawFindingsById(id: number): Promise<IRawFinding[]> {
-  return fetch(`${API}/findings/raw/${id}`).then((res: Response) => res.json())
-}
+export const getRawFindings = (): Promise<IRawFinding[]> =>
+  fetch(`${API}/findings/raw`).then((res: Response) => res.json())
 
-export function getRawFindingsCounts(): Promise<any> {
-  return fetch(`${API}/findings/raw/count`).then((res: Response) => res.json())
-}
+export const getRawFindingsById = (id: number): Promise<IRawFinding[]> =>
+  fetch(`${API}/findings/raw/${id}`).then((res: Response) => res.json())
+
+export const getRawFindingsCounts = (): Promise<any> =>
+  fetch(`${API}/findings/raw/count`).then((res: Response) => res.json())
