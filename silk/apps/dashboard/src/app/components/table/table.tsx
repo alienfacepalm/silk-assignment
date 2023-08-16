@@ -48,7 +48,7 @@ export const Table: React.FC<{
                 )}
               </>
             ),
-            header: () => <span>ID</span>,
+            header: () => <span></span>,
           },
           {
             accessorFn: (row: IGroupedFinding) => row.severity,
