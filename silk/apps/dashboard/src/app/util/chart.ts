@@ -1,5 +1,5 @@
 import { Data } from 'react-minimal-pie-chart/types/commonTypes'
-import { IGroupedFinding } from '../view/dashboard/types'
+import { IFinding } from '../view/dashboard/types'
 
 export const severityColorMap: Record<string, string> = {
   low: '#378bf1',
@@ -8,7 +8,7 @@ export const severityColorMap: Record<string, string> = {
   critical: '#ff0000',
 }
 
-export function calculateSeverityPercentages(findings: IGroupedFinding[]): {
+export function calculateSeverityPercentages(findings: IFinding[]): {
   low: number
   medium: number
   high: number
@@ -43,10 +43,10 @@ export function calculateSeverityPercentages(findings: IGroupedFinding[]): {
 }
 
 export function severityPercentageChartData(
-  findings: IGroupedFinding[] | undefined,
+  findings: IFinding[] | undefined,
 ): Data {
   const percentages: Record<string, number> = calculateSeverityPercentages(
-    findings as IGroupedFinding[],
+    findings as IFinding[],
   )
 
   return Object.entries(percentages).map(([title, value]) => ({

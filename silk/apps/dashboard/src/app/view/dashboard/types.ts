@@ -1,4 +1,4 @@
-export interface IGroupedFinding {
+interface IGroupedFinding {
   id: number
   grouping_type: string
   grouping_key: string
@@ -14,7 +14,7 @@ export interface IGroupedFinding {
   subRows?: any // TODO: type this
 }
 
-export interface IRawFinding {
+interface IRawFinding {
   id: number
   source_security_tool_name: string
   source_security_tool_id: string
@@ -31,8 +31,6 @@ export interface IRawFinding {
   grouped_finding_id: number
 }
 
-export interface IRawFindingCount {
-  _id: string
-  count: number
-  grouped_finding_id?: number
+export interface IFinding extends IGroupedFinding {
+  rawFindings: IRawFinding[]
 }

@@ -14,18 +14,17 @@ import {
 
 import { Severity } from './severity'
 import { Status } from './status'
-import { IGroupedFinding, IRawFindingCount } from '../../view/dashboard/types'
+import { IFinding } from '../../view/dashboard/types'
 
 import './table.css'
 
 export const Table: React.FC<{
-  data: IGroupedFinding[]
-  rawFindingsCounts: IRawFindingCount[]
-}> = ({ data, rawFindingsCounts }) => {
+  data: IFinding[]
+}> = ({ data }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
-  const columns = React.useMemo<ColumnDef<IGroupedFinding>[]>(
+  const columns = React.useMemo<ColumnDef<IFinding>[]>(
     () => [
       {
         header: 'Grouped Findings',
@@ -51,60 +50,55 @@ export const Table: React.FC<{
             header: () => <span></span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => row.severity,
+            accessorFn: (row: IFinding) => row.severity,
             id: 'severity',
             cell: (info) => <Severity level={info.getValue()} />,
             header: () => <span>SEVERITY</span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => row.grouped_finding_created,
+            accessorFn: (row: IFinding) => row.grouped_finding_created,
             id: 'time',
             cell: (info) => moment(info.getValue()).format('L hh:mm'),
             header: () => <span>TIME</span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => row.sla,
+            accessorFn: (row: IFinding) => row.sla,
             id: 'sla',
             cell: (info) => moment(info.getValue()).format('L hh:mm'),
             header: () => <span>SLA</span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => row.description,
+            accessorFn: (row: IFinding) => row.description,
             id: 'description',
             cell: (info) => info.getValue(),
             header: () => <span>DESCRIPTION</span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => row.security_analyst,
+            accessorFn: (row: IFinding) => row.security_analyst,
             id: 'security_analyst',
             cell: (info) => info.getValue(),
             header: () => <span>SECURITY ANALYST</span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => row.owner,
+            accessorFn: (row: IFinding) => row.owner,
             id: 'owner',
             cell: (info) => info.getValue(),
             header: () => <span>OWNER</span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => row.workflow,
+            accessorFn: (row: IFinding) => row.workflow,
             id: 'workflow',
             cell: (info) => info.getValue(),
             header: () => <span>WORKFLOW</span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => row.status,
+            accessorFn: (row: IFinding) => row.status,
             id: 'status',
             cell: (info) => <Status value={info.getValue()} />,
             header: () => <span>STATUS</span>,
           },
           {
-            accessorFn: (row: IGroupedFinding) => {
-              const record = rawFindingsCounts?.find(
-                (finding: IRawFindingCount) => row.id === Number(finding._id),
-              )
-              return record?.count.toString()
-            },
+            accessorFn: (row: IFinding) => row.rawFindings?.length,
             id: 'number_of_findings',
             cell: (info) => (
               <div className={!!info.getValue() ? 'finding-count' : ''}>
@@ -123,7 +117,7 @@ export const Table: React.FC<{
     data,
     columns,
     state: { expanded, sorting },
-    getSubRows: (row) => row.subRows,
+    getSubRows: (row: IFinding) => row.rawFindings as any,
     onExpandedChange: setExpanded,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),

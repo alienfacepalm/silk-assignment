@@ -3,59 +3,23 @@ import { useQuery } from '@tanstack/react-query'
 
 import { Loader, ErrorMessage, Table } from '../../components'
 
-import {
-  getGroupedFindings,
-  getRawFindings,
-  getRawFindingsCounts,
-} from '../../util/queries'
+import { getAllFindings } from '../../util/queries'
 import { severityPercentageChartData } from '../../util/chart'
 import { PieChart, Legend } from '../../components/pie-chart'
-import { IGroupedFinding, IRawFinding } from './types'
+import { IFinding } from './types'
 
 export const Dashboard: React.FC = () => {
   const [show, setShow] = React.useState<'table' | 'chart'>('table')
 
-  const {
-    isLoading: groupedFindingsIsLoading,
-    error: groupedFindingsError,
-    data: groupedFindings,
-  } = useQuery({
-    queryKey: ['groupedFindings'],
-    queryFn: getGroupedFindings,
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['findings'],
+    queryFn: getAllFindings,
   })
 
-  const { error: rawFindingsError, data: rawFindings } = useQuery({
-    queryKey: ['rawFindings'],
-    queryFn: getRawFindings,
-  })
+  if (isLoading) return <Loader />
+  if (error) return <ErrorMessage error={error as Error} />
 
-  const { error: rawFindingCountsError, data: rawFindingCounts } = useQuery({
-    queryKey: ['rawFindingCounts'],
-    queryFn: getRawFindingsCounts,
-  })
-
-  const tableData: IGroupedFinding[] | undefined = React.useMemo(() => {
-    if (groupedFindings && rawFindings) {
-      for (let i = 0; i < groupedFindings.length; i++) {
-        const subRows: IRawFinding[] = rawFindings?.filter(
-          (raw: IRawFinding) =>
-            raw.grouped_finding_id === groupedFindings[i].id,
-        )
-        groupedFindings[i].subRows = subRows
-      }
-      return groupedFindings
-    }
-  }, [groupedFindings, rawFindings])
-
-  if (groupedFindingsIsLoading) return <Loader />
-  if (groupedFindingsError)
-    return <ErrorMessage error={groupedFindingsError as Error} />
-  if (rawFindingsError)
-    return <ErrorMessage error={rawFindingsError as Error} />
-  if (rawFindingCountsError)
-    return <ErrorMessage error={rawFindingCountsError as Error} />
-
-  if (tableData)
+  if (data)
     return (
       <div className="grid place-items-center">
         <div className="inline-flex" role="group">
@@ -89,8 +53,9 @@ export const Dashboard: React.FC = () => {
 
         {show === 'table' && (
           <Table
-            data={tableData as IGroupedFinding[]}
-            rawFindingsCounts={rawFindingCounts}
+            data={
+              data.sort((a: IFinding, b: IFinding) => a.id < b.id) as IFinding
+            }
           />
         )}
 
@@ -98,7 +63,7 @@ export const Dashboard: React.FC = () => {
           <>
             <div className="flex justify-center p-20 row-auto">
               <div className="w-full md:w-50">
-                <PieChart data={severityPercentageChartData(groupedFindings)} />
+                <PieChart data={severityPercentageChartData(data)} />
               </div>
             </div>
             <div className="row-auto">
