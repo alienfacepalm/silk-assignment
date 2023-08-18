@@ -17,34 +17,34 @@ export class FindingsService {
    * @returns {Promise<IGroupedFinding[]>} A promise that resolves to an array of all findings.
    */
   async getAllFindings(): Promise<IFinding[]> {
-    const aggregationPipeline = [
-      {
-        $lookup: {
-          from: 'raw_findings',
-          localField: 'id',
-          foreignField: 'grouped_finding_id',
-          as: 'rawFindings',
-        },
-      },
-      {
-        $group: {
-          _id: '$_id',
-          groupedFindings: { $first: '$$ROOT' },
-          rawFindings: { $push: '$rawFindings' },
-        },
-      },
-      {
-        $replaceRoot: {
-          newRoot: {
-            $mergeObjects: [
-              '$groupedFindings',
-              { rawFindings: { $arrayElemAt: ['$rawFindings', 0] } },
-            ],
+    return this.groupedFindingModel
+      .aggregate([
+        {
+          $lookup: {
+            from: 'raw_findings',
+            localField: 'id',
+            foreignField: 'grouped_finding_id',
+            as: 'rawFindings',
           },
         },
-      },
-    ]
-
-    return this.groupedFindingModel.aggregate(aggregationPipeline).exec()
+        {
+          $group: {
+            _id: '$_id',
+            groupedFindings: { $first: '$$ROOT' },
+            rawFindings: { $push: '$rawFindings' },
+          },
+        },
+        {
+          $replaceRoot: {
+            newRoot: {
+              $mergeObjects: [
+                '$groupedFindings',
+                { rawFindings: { $arrayElemAt: ['$rawFindings', 0] } },
+              ],
+            },
+          },
+        },
+      ])
+      .exec()
   }
 }
