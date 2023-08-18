@@ -162,14 +162,17 @@ export const Table: React.FC<{
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => {
-                return (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                )
-              })}
+            <tr
+              key={row.id}
+              style={{
+                backgroundColor: row.getCanExpand() ? 'transparent' : '#fefefa',
+              }}
+            >
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
@@ -225,9 +228,7 @@ export const Table: React.FC<{
         </span>
         <select
           value={table.getState().pagination.pageSize}
-          onChange={(e) => {
-            table.setPageSize(Number(e.target.value))
-          }}
+          onChange={(e) => table.setPageSize(Number(e.target.value))}
         >
           {[10, 20, 30, 40, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
