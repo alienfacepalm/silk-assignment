@@ -31,5 +31,5 @@ interface IRawFinding {
 }
 
 export interface IFinding extends IGroupedFinding {
-  rawFindings: IRawFinding[]
+  rawFindings?: IRawFinding[]
 }

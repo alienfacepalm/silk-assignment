@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Get } from '@nestjs/common'
 import { FindingsService } from './findings.service'
 import { IFinding } from './schemas/findings.interface'
 

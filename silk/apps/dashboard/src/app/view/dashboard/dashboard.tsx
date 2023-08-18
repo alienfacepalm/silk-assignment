@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import { Loader, ErrorMessage, Table } from '../../components'
@@ -6,7 +6,6 @@ import { Loader, ErrorMessage, Table } from '../../components'
 import { getAllFindings } from '../../util/queries'
 import { severityPercentageChartData } from '../../util/chart'
 import { PieChart, Legend } from '../../components/pie-chart'
-import { IFinding } from './types'
 
 export const Dashboard: React.FC = () => {
   const [show, setShow] = React.useState<'table' | 'chart'>('table')
