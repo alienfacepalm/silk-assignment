@@ -14,7 +14,7 @@ export class FindingsService {
 
   /**
    * Retrieve all findings from database
-   * @returns {Promise<IGroupedFinding[]>} A promise that resolves to an array of all findings.
+   * @returns {Promise<IFinding[]>} A promise that resolves to an array of all findings.
    */
   async getAllFindings(): Promise<IFinding[]> {
     return this.groupedFindingModel
