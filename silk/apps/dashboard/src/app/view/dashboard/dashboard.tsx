@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import { Loader, ErrorMessage, Table } from '../../components'
@@ -51,13 +51,7 @@ export const Dashboard: React.FC = () => {
           </button>
         </div>
 
-        {show === 'table' && (
-          <Table
-            data={
-              data.sort((a: IFinding, b: IFinding) => a.id < b.id) as IFinding
-            }
-          />
-        )}
+        {show === 'table' && <Table data={data.sort((a, b) => a.id - b.id)} />}
 
         {show === 'chart' && (
           <>
