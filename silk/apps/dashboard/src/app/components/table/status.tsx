@@ -21,7 +21,7 @@ const statusColorMap: Record<string, string> = {
   halted: '#ff6600',
   cancelled: '#ff0000',
   complete: '#378bf1',
-  fixed: '#378bf1',
+  fixed: '#800080',
 }
 
 const statusProgressMap: Record<string, number> = {
