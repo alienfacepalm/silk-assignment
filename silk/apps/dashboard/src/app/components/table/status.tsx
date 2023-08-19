@@ -40,8 +40,9 @@ export const Status: React.FC<{
 }> = ({ id, type, value }) => {
   const color = statusColorMap[value]
   const [showPopover, setShowPopover] = React.useState<boolean>(false)
+  const queryClient = useQueryClient()
   const { mutate } = useMutation(updateStatus, {
-    onSettled: () => useQueryClient().invalidateQueries(['findings']),
+    onSettled: () => queryClient.invalidateQueries(['findings']),
   })
 
   const handleUpdateStatus: (status: string) => Promise<void> = async (
