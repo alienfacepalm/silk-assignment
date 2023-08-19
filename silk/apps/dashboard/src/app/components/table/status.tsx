@@ -40,12 +40,13 @@ export const Status: React.FC<{
 }> = ({ id, type, value }) => {
   const color = statusColorMap[value]
   const [showPopover, setShowPopover] = React.useState<boolean>(false)
-  const queryClient = useQueryClient()
   const { mutate } = useMutation(updateStatus, {
-    onSettled: () => queryClient.invalidateQueries(['findings']),
+    onSettled: () => useQueryClient().invalidateQueries(['findings']),
   })
 
-  const handleUpdateStatus = async (status: string) => {
+  const handleUpdateStatus: (status: string) => Promise<void> = async (
+    status: string,
+  ) => {
     await mutate({ id, type, status })
     setShowPopover(false)
   }
@@ -64,7 +65,7 @@ export const Status: React.FC<{
           <div className="te-arrow"></div>
           <div
             data-popover="popover"
-            className="absolute w-max whitespace-normal break-words  border  bg-white p-4 font-sans text-sm font-normal text-blue-gray-500 focus:outline-none"
+            className="absolute w-max whitespace-normal break-words border bg-white p-4 font-sans text-sm font-normal text-blue-gray-500 focus:outline-none"
           >
             {statuses.map((status: string) => (
               <div
