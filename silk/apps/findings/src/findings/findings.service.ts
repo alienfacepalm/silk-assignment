@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Model } from 'mongoose'
+import { Document, Model } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose'
 
 import { IGroupedFinding } from './schemas/grouped.interface'
@@ -12,10 +12,6 @@ export class FindingsService {
     private readonly groupedFindingModel: Model<IGroupedFinding>,
   ) {}
 
-  /**
-   * Retrieve all findings from database
-   * @returns {Promise<IFinding[]>} A promise that resolves to an array of all findings.
-   */
   async getAllFindings(): Promise<IFinding[]> {
     return this.groupedFindingModel
       .aggregate([
@@ -46,5 +42,9 @@ export class FindingsService {
         },
       ])
       .exec()
+  }
+
+  async updateStatus(id: number, status: string): Promise<any> {
+    return this.groupedFindingModel.updateOne({ _id: id }, { $set: { status } })
   }
 }

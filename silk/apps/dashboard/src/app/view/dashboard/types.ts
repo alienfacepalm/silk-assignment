@@ -1,4 +1,5 @@
 interface IGroupedFinding {
+  _id: string
   id: number
   grouping_type: string
   grouping_key: string
@@ -14,6 +15,7 @@ interface IGroupedFinding {
 }
 
 interface IRawFinding {
+  _id: string
   id: number
   source_security_tool_name: string
   source_security_tool_id: string

@@ -94,7 +94,9 @@ export const Table: React.FC<{
           {
             accessorFn: (row: IFinding) => row.status,
             id: 'status',
-            cell: (info) => <Status value={info.getValue()} />,
+            cell: (info) => (
+              <Status id={info.row.original._id} value={info.getValue()} />
+            ),
             header: () => <span>STATUS</span>,
           },
           {

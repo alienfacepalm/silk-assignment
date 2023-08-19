@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Req } from '@nestjs/common'
 import { FindingsService } from './findings.service'
 import { IFinding } from './schemas/findings.interface'
 
@@ -6,12 +6,13 @@ import { IFinding } from './schemas/findings.interface'
 export class FindingsController {
   constructor(private readonly findingsService: FindingsService) {}
 
-  /**
-   * Retrieve all findings with rawFindings combined
-   * @returns {Promise<IFinding[]>} - Array of all findings.
-   */
   @Get('all')
-  findAllFindings(): Promise<IFinding[]> {
+  async findAllFindings(): Promise<IFinding[]> {
     return this.findingsService.getAllFindings()
+  }
+
+  @Patch('/status')
+  updateStatus(@Body('id') id: number, @Body('status') status: string) {
+    return this.findingsService.updateStatus(id, status)
   }
 }

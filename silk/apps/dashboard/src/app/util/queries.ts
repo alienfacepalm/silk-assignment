@@ -6,3 +6,12 @@ const API = `http://localhost:7455/api`
 
 export const getAllFindings = (): Promise<IFinding[]> =>
   fetch(`${API}/findings/all`).then((res: Response) => res.json())
+
+export const updateStatus = (status: { id: string; status: string }) =>
+  fetch(`${API}/findings/status`, {
+    method: 'PATCH',
+    body: JSON.stringify(status),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
