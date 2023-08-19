@@ -79,7 +79,7 @@ export const Status: React.FC<{
       </div>
 
       <div
-        className={clsx('status', 'cursor-pointer')}
+        className="status cursor-pointer"
         style={{ backgroundColor: statusColorMap[value] }}
         onClick={() => {
           setShowPopover((state) => !state)
