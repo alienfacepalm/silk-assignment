@@ -7,7 +7,7 @@ const API = `http://localhost:7455/api`
 export const getAllFindings = (): Promise<IFinding[]> =>
   fetch(`${API}/findings/all`).then((res: Response) => res.json())
 
-export const updateStatus = (status: {
+export const updateFindingStatus = (status: {
   id: string
   type: 'grouped' | 'raw'
   status: string

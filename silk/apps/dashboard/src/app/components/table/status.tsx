@@ -3,8 +3,9 @@ import { upperCase, startCase } from 'lodash'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 
+import { updateFindingStatus } from '../../util'
+
 import './table.css'
-import { updateStatus } from '../../util'
 
 export const statuses: string[] = [
   'open',
@@ -41,7 +42,7 @@ export const Status: React.FC<{
   const color = statusColorMap[value]
   const [showPopover, setShowPopover] = React.useState<boolean>(false)
   const queryClient = useQueryClient()
-  const { mutate } = useMutation(updateStatus, {
+  const { mutate } = useMutation(updateFindingStatus, {
     onSettled: () => queryClient.invalidateQueries(['findings']),
   })
 

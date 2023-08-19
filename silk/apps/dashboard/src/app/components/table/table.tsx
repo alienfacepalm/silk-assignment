@@ -10,7 +10,6 @@ import {
   SortingState,
   getExpandedRowModel,
   getPaginationRowModel,
-  RowSelection,
 } from '@tanstack/react-table'
 
 import { Severity } from './severity'
