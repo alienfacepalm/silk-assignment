@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Model } from 'mongoose'
+import { Model, UpdateWriteOpResult } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose'
 
 import { IGroupedFinding } from './schemas/grouped.interface'
@@ -52,8 +52,7 @@ export class FindingsService {
     id: number,
     type: 'grouped' | 'raw',
     status: string,
-  ): Promise<any> {
-    console.log({ id, type, status })
+  ): Promise<UpdateWriteOpResult> {
     switch (type) {
       case 'grouped':
         return this.groupedFindingModel.updateOne(
