@@ -12,6 +12,7 @@ export const statuses: string[] = [
   'halted',
   'cancelled',
   'complete',
+  'fixed',
 ]
 
 const statusColorMap: Record<string, string> = {
@@ -20,6 +21,7 @@ const statusColorMap: Record<string, string> = {
   halted: '#ff6600',
   cancelled: '#ff0000',
   complete: '#378bf1',
+  fixed: '#378bf1',
 }
 
 const statusProgressMap: Record<string, number> = {
@@ -28,12 +30,14 @@ const statusProgressMap: Record<string, number> = {
   halted: 50,
   cancelled: 100,
   complete: 100,
+  fixed: 100,
 }
 
-export const Status: React.FC<{ id: string; value: string }> = ({
-  id,
-  value,
-}) => {
+export const Status: React.FC<{
+  id: string
+  type: 'grouped' | 'raw'
+  value: string
+}> = ({ id, type, value }) => {
   const color = statusColorMap[value]
   const [showPopover, setShowPopover] = React.useState<boolean>(false)
   const queryClient = useQueryClient()
@@ -42,7 +46,7 @@ export const Status: React.FC<{ id: string; value: string }> = ({
   })
 
   const handleUpdateStatus = async (status: string) => {
-    await mutate({ id, status })
+    await mutate({ id, type, status })
     setShowPopover(false)
   }
 
@@ -75,7 +79,7 @@ export const Status: React.FC<{ id: string; value: string }> = ({
       </div>
 
       <div
-        className="status cursor-pointer "
+        className={clsx('status', 'cursor-pointer')}
         style={{ backgroundColor: statusColorMap[value] }}
         onClick={() => {
           setShowPopover((state) => !state)

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Req } from '@nestjs/common'
+import { Body, Controller, Get, Patch } from '@nestjs/common'
 import { FindingsService } from './findings.service'
 import { IFinding } from './schemas/findings.interface'
 
@@ -12,7 +12,11 @@ export class FindingsController {
   }
 
   @Patch('/status')
-  updateStatus(@Body('id') id: number, @Body('status') status: string) {
-    return this.findingsService.updateStatus(id, status)
+  updateStatus(
+    @Body('id') id: number,
+    @Body('type') type: 'grouped' | 'raw',
+    @Body('status') status: string,
+  ) {
+    return this.findingsService.updateStatus(id, type, status)
   }
 }

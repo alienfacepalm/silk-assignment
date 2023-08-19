@@ -10,6 +10,9 @@ export class FindingsService {
   constructor(
     @InjectModel('GroupedFinding')
     private readonly groupedFindingModel: Model<IGroupedFinding>,
+
+    @InjectModel('RawFinding')
+    private readonly rawFindingModel: Model<IGroupedFinding>,
   ) {}
 
   async getAllFindings(): Promise<IFinding[]> {
@@ -44,7 +47,20 @@ export class FindingsService {
       .exec()
   }
 
-  async updateStatus(id: number, status: string): Promise<any> {
-    return this.groupedFindingModel.updateOne({ _id: id }, { $set: { status } })
+  async updateStatus(
+    id: number,
+    type: 'grouped' | 'raw',
+    status: string,
+  ): Promise<any> {
+    console.log({ id, type, status })
+    switch (type) {
+      case 'grouped':
+        return this.groupedFindingModel.updateOne(
+          { _id: id },
+          { $set: { status } },
+        )
+      case 'raw':
+        return this.rawFindingModel.updateOne({ _id: id }, { $set: { status } })
+    }
   }
 }

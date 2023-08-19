@@ -10,6 +10,7 @@ import {
   SortingState,
   getExpandedRowModel,
   getPaginationRowModel,
+  RowSelection,
 } from '@tanstack/react-table'
 
 import { Severity } from './severity'
@@ -95,7 +96,11 @@ export const Table: React.FC<{
             accessorFn: (row: IFinding) => row.status,
             id: 'status',
             cell: (info) => (
-              <Status id={info.row.original._id} value={info.getValue()} />
+              <Status
+                id={info.row.original._id}
+                value={info.getValue()}
+                type={info.row.getCanExpand() ? 'grouped' : 'raw'}
+              />
             ),
             header: () => <span>STATUS</span>,
           },
