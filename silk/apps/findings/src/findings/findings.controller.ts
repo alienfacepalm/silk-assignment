@@ -12,11 +12,11 @@ export class FindingsController {
   }
 
   @Patch('/status')
-  updateStatus(
+  updateFindingStatus(
     @Body('id') id: number,
     @Body('type') type: 'grouped' | 'raw',
     @Body('status') status: string,
   ) {
-    return this.findingsService.updateStatus(id, type, status)
+    return this.findingsService.updateFindingStatus(id, type, status)
   }
 }

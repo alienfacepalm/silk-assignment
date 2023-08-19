@@ -48,7 +48,7 @@ export class FindingsService {
       .exec()
   }
 
-  async updateStatus(
+  async updateFindingStatus(
     id: number,
     type: 'grouped' | 'raw',
     status: string,
