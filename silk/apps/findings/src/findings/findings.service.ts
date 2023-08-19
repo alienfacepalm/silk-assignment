@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common'
-import { Document, Model } from 'mongoose'
+import { Model } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose'
 
 import { IGroupedFinding } from './schemas/grouped.interface'
+import { IRawFinding } from './schemas/raw.interface'
 import { IFinding } from './schemas/findings.interface'
 
 @Injectable()
@@ -12,7 +13,7 @@ export class FindingsService {
     private readonly groupedFindingModel: Model<IGroupedFinding>,
 
     @InjectModel('RawFinding')
-    private readonly rawFindingModel: Model<IGroupedFinding>,
+    private readonly rawFindingModel: Model<IRawFinding>,
   ) {}
 
   async getAllFindings(): Promise<IFinding[]> {
