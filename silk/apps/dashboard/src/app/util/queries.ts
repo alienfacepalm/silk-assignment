@@ -11,7 +11,7 @@ export const updateFindingStatus = (status: {
   id: string
   type: 'grouped' | 'raw'
   status: string
-}) =>
+}): Promise<Response> =>
   fetch(`${API}/findings/status`, {
     method: 'PATCH',
     body: JSON.stringify(status),
