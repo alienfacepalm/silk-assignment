@@ -32,7 +32,7 @@ export const Table: React.FC<{
           {
             accessorKey: 'id',
             cell: ({ row }) => (
-              <>
+              <div>
                 {row.getCanExpand() ? (
                   <button
                     {...{
@@ -45,7 +45,7 @@ export const Table: React.FC<{
                 ) : (
                   '○'
                 )}
-              </>
+              </div>
             ),
             header: () => <span></span>,
           },
@@ -107,7 +107,7 @@ export const Table: React.FC<{
             accessorFn: (row: IFinding) => row.rawFindings?.length,
             id: 'number_of_findings',
             cell: (info) => (
-              <div className={!!info.getValue() ? 'finding-count' : ''}>
+              <div className={info.getValue() ? 'finding-count' : ''}>
                 {info.getValue()}
               </div>
             ),
