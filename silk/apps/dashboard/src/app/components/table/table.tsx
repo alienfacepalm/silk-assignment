@@ -116,7 +116,7 @@ export const Table: React.FC<{
         ],
       },
     ],
-    [data],
+    [],
   )
 
   const table = useReactTable({
