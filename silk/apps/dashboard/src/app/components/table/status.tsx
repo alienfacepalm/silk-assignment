@@ -53,11 +53,9 @@ export const Status: React.FC<{
     setShowPopover(false)
   }
 
-  const handleMouseLeave = () => setShowPopover(false)
-
   return (
     <>
-      <div className="relative" onMouseLeave={handleMouseLeave}>
+      <div className="relative" onMouseLeave={() => setShowPopover(false)}>
         <div
           className={clsx(
             ['te-popover top-0 right-0 z-10'],
@@ -86,9 +84,7 @@ export const Status: React.FC<{
       <div
         className="status cursor-pointer"
         style={{ backgroundColor: statusColorMap[value] }}
-        onClick={() => {
-          setShowPopover((state) => !state)
-        }}
+        onClick={() => setShowPopover((state) => !state)}
       >
         {upperCase(startCase(value))}
       </div>
