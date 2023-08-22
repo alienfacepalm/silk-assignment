@@ -1,3 +1,5 @@
+import { UpdateWriteOpResult } from 'mongoose'
+
 import { Body, Controller, Get, Patch } from '@nestjs/common'
 import { FindingsService } from './findings.service'
 import { IFinding } from './schemas/findings.interface'
@@ -12,11 +14,11 @@ export class FindingsController {
   }
 
   @Patch('/status')
-  updateFindingStatus(
+  async updateFindingStatus(
     @Body('id') id: number,
     @Body('type') type: 'grouped' | 'raw',
     @Body('status') status: string,
-  ) {
+  ): Promise<UpdateWriteOpResult> {
     return this.findingsService.updateFindingStatus(id, type, status)
   }
 }
