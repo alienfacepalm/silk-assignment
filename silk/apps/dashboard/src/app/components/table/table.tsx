@@ -130,6 +130,7 @@ export const Table: React.FC<{
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    autoResetPageIndex: false,
     debugTable: false,
   })
 
