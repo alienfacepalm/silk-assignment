@@ -2,6 +2,7 @@ import React from 'react'
 import { upperCase, startCase } from 'lodash'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { v4 as uuid } from 'uuid'
 
 import { updateFindingStatus } from '../../util'
 
@@ -71,6 +72,7 @@ export const Status: React.FC<{
           >
             {statuses.map((status: string) => (
               <div
+                key={uuid()}
                 className="bg-white p-2 text-base cursor-pointer transition duration-300 ease-in-out hover:bg-gray-200"
                 onClick={() => handleUpdateStatus(status)}
               >
