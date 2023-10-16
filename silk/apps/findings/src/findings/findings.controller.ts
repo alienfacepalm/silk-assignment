@@ -13,7 +13,7 @@ export class FindingsController {
     return this.findingsService.getAllFindings()
   }
 
-  @Patch('/status')
+  @Patch('status')
   async updateFindingStatus(
     @Body('id') id: number,
     @Body('type') type: 'grouped' | 'raw',
